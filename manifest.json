@@ -9,13 +9,14 @@
   "icons": [
     {
       "src": "assets/icons/maskable_icon.png",
-      "sizes": "512x512",
+      "sizes": "279x279",
       "type": "image/png"
       "purpose": "any maskable"
     }
   ]
 
 }
+
 
 
 
