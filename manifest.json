@@ -1,0 +1,16 @@
+{
+  "name": "Kalkulator Jubilerski Pro",
+  "short_name": "Jubiler",
+  "description": "Profesjonalny kalkulator masy i kosztów obrączek",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#d4af37",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3590/3590463.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
