@@ -47,6 +47,35 @@
         .preview-mode .app-shell { background: #fff; }
         .preview-mode .sticky-summary { background: #f9f9f9; color: #000; border-top: 4px solid var(--dark); border-radius: 0; }
         .preview-mode #totalKoszt { color: #000 !important; }
+        @media print {
+            /* Ukrywamy przyciski nawigacji na wydruku */
+            .no-view, #btn-back { display: none !important; }
+
+            /* Resetujemy style dla arkusza */
+            body { background: white; }
+            .app-shell { max-width: 100%; border: none; }
+
+            /* Wymuszamy podział strony po kartach obrączek */
+            #card-b { 
+                page-break-after: always; /* Dla starszych przeglądarek */
+                break-after: page;        /* Nowoczesny standard */
+                margin-bottom: 0;
+            }
+            /* Opcjonalnie: upewniamy się, że karty nie są przecinane w połowie */
+            .card { 
+                page-break-inside: avoid; 
+                break-inside: avoid; 
+            }
+
+            /* Podsumowanie na dole drugiej strony */
+            .sticky-summary { 
+                position: relative !important; 
+                background: white !important; 
+                color: black !important;
+                border-top: 2px solid var(--dark);
+                margin-top: 50px;
+            }
+         }
     </style>
 </head>
 <body>
@@ -136,6 +165,7 @@
         
         <button class="btn-view no-view" onclick="togglePreview()">👁️ OFERTA KLIENTA</button>
         <button class="btn-view" id="btn-back" style="display:none; background:#666;" onclick="togglePreview()">⬅ POWRÓT DO EDYCJI</button>
+        <button class="btn-view no-view" style="background:#2980b9;" onclick="window.print()">🖨️ DRUKUJ LUB ZAPISZ PDF</button>
     </div>
 
     <div class="sticky-summary">
@@ -202,4 +232,5 @@
 </body>
 
 </html>
+
 
