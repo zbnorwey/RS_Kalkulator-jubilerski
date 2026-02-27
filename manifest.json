@@ -1,6 +1,6 @@
 {
-  "name": "Kalkulator Jubilerski Pro",
-  "short_name": "Jubiler",
+  "name": "RS Kalkulator",
+  "short_name": "ROSSO",
   "description": "Profesjonalny kalkulator masy i kosztów obrączek",
   "start_url": "index.html",
   "display": "standalone",
@@ -15,6 +15,7 @@
   ]
 
 }
+
 
 
 
