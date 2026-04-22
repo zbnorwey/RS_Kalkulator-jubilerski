@@ -72,37 +72,44 @@
         </div>
 
         <div class="card">
-            <div class="row">
+            <div class="row-triple">
                 <div>
                     <label>Kruszec</label>
                     <select id="kruszec" onchange="oblicz()">
-                        <option value="10.9">Złoto 333 (8K)</option>
-                        <option value="13.6" selected>Złoto 585 (14K)</option>
-                        <option value="15.5">Złoto 750 (18K)</option>
-                        <option value="10.5">Srebro 925</option>
+                        <option value="10.9">Złoto 333</option>
+                        <option value="13.6" selected>Złoto 585</option>
+                        <option value="15.5">Złoto 750</option>
+						<option value="10.5">Srebro 925</option>
                     </select>
                 </div>
-                <div class="no-view">
-                    <label>Cena/1g (PLN)</label>
+                <div>
+                    <label>Cena/1g</label>
                     <input type="number" id="cenaGram" value="" oninput="oblicz()">
+                </div>
+                <div>
+                    <label>Rabat %</label>
+                    <input type="number" id="rabatProcent" value="" min="0" max="100" oninput="oblicz()" style="color:var(--sale); font-weight:bold;">
                 </div>
             </div>
         </div>
 
         <div class="card" id="card-a">
-            <label style="color:var(--gold)">💍 Obrączka A (Damska)</label>
+            <label style="color:var(--gold)">💍 Obrączka A</label>
             <div class="row">
                 <div><label>Rozmiar</label><input type="number" id="r1_roz" value="" oninput="oblicz()"></div>
-                <div><label>Szerokość (mm)</label><input type="number" id="r1_szer" value="" step="0.5" oninput="oblicz()"></div>
+                <div><label>Szerokość</label><input type="number" id="r1_szer" value="" step="0.5" oninput="oblicz()"></div>
             </div>
             <div class="row">
-                <div><label>Grubość (mm)</label><input type="number" id="r1_grub" value="" step="0.1" oninput="oblicz()"></div>
+                <div><label>Grubość</label><input type="number" id="r1_grub" value="" step="0.1" oninput="oblicz()"></div>
                 <div><label>Profil</label>
                     <select id="r1_mod" onchange="oblicz()">
                         <option value="1.0">Płaska</option>
+						<option value="0.93">Płaska + Faz.</option>
                         <option value="1.12">Płaska + Socz.</option>
+						<option value="1.05">Płaska + Faz + Socz.</option>
                         <option value="0.8">Półokrągła</option>
                         <option value="0.95">Półokr. + Socz.</option>
+						
                     </select>
                 </div>
             </div>
@@ -110,17 +117,19 @@
         </div>
 
         <div class="card" id="card-b">
-            <label style="color:var(--gold)">💍 Obrączka B (Męska)</label>
+            <label style="color:var(--gold)">💍 Obrączka B</label>
             <div class="row">
                 <div><label>Rozmiar</label><input type="number" id="r2_roz" value="" oninput="oblicz()"></div>
-                <div><label>Szerokość (mm)</label><input type="number" id="r2_szer" value="" step="0.5" oninput="oblicz()"></div>
+                <div><label>Szerokość</label><input type="number" id="r2_szer" value="" step="0.5" oninput="oblicz()"></div>
             </div>
             <div class="row">
-                <div><label>Grubość (mm)</label><input type="number" id="r2_grub" value="" step="0.1" oninput="oblicz()"></div>
+                <div><label>Grubość</label><input type="number" id="r2_grub" value="" step="0.1" oninput="oblicz()"></div>
                 <div><label>Profil</label>
                     <select id="r2_mod" onchange="oblicz()">
                         <option value="1.0">Płaska</option>
+						<option value="0.93">Płaska + Faz.</option>
                         <option value="1.12">Płaska + Socz.</option>
+						<option value="1.05">Płaska + Faz + Socz.</option>
                         <option value="0.8">Półokrągła</option>
                         <option value="0.95">Półokr. + Socz.</option>
                     </select>
@@ -130,16 +139,17 @@
         </div>
 
         <div class="card">
-            <label>Notatki i Grawer</label>
-            <textarea id="notatki" rows="5" placeholder="Brak uwag..."></textarea>
+            <label>Uwagi i Grawer</label>
+            <textarea id="notatki" rows="2"></textarea>
+            <div id="discount-info" style="margin-top:10px;">Zastosowano rabat: <span id="val-discount">0</span>%</div>
         </div>
         
-        <button class="btn-view no-view" onclick="togglePreview()">👁️ OFERTA DLA KLIENTA</button>
-        <button class="btn-view" id="btn-back" style="display:none; background:#666;" onclick="togglePreview()">⬅ EDYTUJ PONOWNIE</button>
+        <button class="btn-view no-view" onclick="togglePreview()">👁️ WIDOK DLA KLIENTA</button>
+        <button class="btn-view" id="btn-back" style="display:none; background:#666;" onclick="togglePreview()">⬅ POWRÓT</button>
     </div>
 
     <div class="sticky-summary">
-        <div id="totalMasa" style="font-weight:bold; font-size: 1.1rem;">0.00 g</div>
+        <div id="totalMasa" style="font-weight:bold;">0.00 g</div>
         <div id="totalKoszt" style="color:var(--gold); font-weight:800; font-size:1.6rem">0.00 zł</div>
     </div>
 </div>
@@ -156,15 +166,12 @@
     }
 
     function oblicz() {
-        const getV = (id) => {
-            const el = document.getElementById(id);
-            return el.tagName === 'SELECT' ? parseFloat(el.value) : (parseFloat(el.value) || 0);
-        };
+        const getV = (id) => parseFloat(document.getElementById(id).value) || 0;
         
-        const g = getV('kruszec'), c = getV('cenaGram');
-        const f = (r, s, gr, m) => {
-            if(r <= 0 || s <= 0 || gr <= 0) return 0;
-            const sr = 12.33 + (r * 0.333);
+        const g = getV('kruszec'), c = getV('cenaGram'), r = getV('rabatProcent');
+        const f = (roz, s, gr, m) => {
+            if(roz <= 0 || s <= 0 || gr <= 0) return 0;
+            const sr = 12.33 + (roz * 0.333);
             return (Math.PI * (Math.pow(sr/2+gr, 2) - Math.pow(sr/2, 2)) * s * g / 1000) * m;
         };
 
@@ -175,23 +182,23 @@
         if(mode === 'pair') document.getElementById('r2_w').innerText = `Masa: ${m2.toFixed(2)} g`;
         
         const tm = m1 + m2;
+        let cenaKoncowa = tm * c;
+        if(r > 0) cenaKoncowa = cenaKoncowa * (1 - r/100);
+
         document.getElementById('totalMasa').innerText = tm.toFixed(2) + " g";
-        document.getElementById('totalKoszt').innerText = (tm * c).toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " zł";
+        document.getElementById('totalKoszt').innerText = cenaKoncowa.toLocaleString('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " zł";
+        
+        document.getElementById('val-discount').innerText = r;
+        document.getElementById('discount-info').style.display = r > 0 ? 'block' : 'none';
     }
 
     function togglePreview() {
         const root = document.getElementById('app-root');
         const isPreview = root.classList.toggle('preview-mode');
-        const btnBack = document.getElementById('btn-back');
-        
-        document.getElementById('display-date').innerText = new Date().toLocaleDateString();
-        btnBack.style.display = isPreview ? 'block' : 'none';
-        
-        // Przewiń na górę, żeby screenshot był ładny
+        document.getElementById('btn-back').style.display = isPreview ? 'block' : 'none';
+        document.getElementById('display-date').innerText = "Data: " + new Date().toLocaleDateString();
         window.scrollTo(0,0);
     }
-
-    // Start
     setTimeout(oblicz, 100);
 </script>
 </body>
