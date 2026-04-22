@@ -7,11 +7,10 @@
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <style>
-        :root { --gold: #d4af37; --dark: #1a1a1a; --bg: #f2f2f7; }
+        :root { --gold: #d4af37; --dark: #1a1a1a; --bg: #f2f2f7; --sale: #e74c3c; }
         body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        .app-shell { max-width: 600px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; background: white; transition: background 0.3s; }
+        .app-shell { max-width: 600px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; background: white; }
         
-        /* Nagłówek */
         header { background: var(--dark); color: white; padding: 15px; text-align: center; border-bottom: 4px solid var(--gold); display: flex; align-items: center; justify-content: center; gap: 15px; }
         header img { height: 40px; width: auto; }
         header h1 { margin: 0; font-size: 1.1rem; letter-spacing: 1px; }
@@ -19,34 +18,31 @@
         .content { padding: 15px; flex: 1; }
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 12px; border: 1px solid #ddd; }
         
-        /* Karty w trybie prezentacji */
-        .preview-mode .card { border: 2px solid #eee; box-shadow: none; margin-bottom: 20px; }
-        .preview-mode .card label { color: #888 !important; }
-
         .mode-tab { display: flex; background: #e5e5ea; border-radius: 10px; padding: 3px; margin-bottom: 15px; }
         .tab { flex: 1; text-align: center; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         .tab.active { background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .row-triple { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        
         label { display: block; font-size: 0.7rem; color: #666; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; }
         input, select, textarea { width: 100%; border: 1px solid #ccc; border-radius: 8px; padding: 12px; font-size: 1rem; box-sizing: border-box; background: #fff; -webkit-appearance: none; }
         
-        .mass-label { display: block; margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px; text-align: center; font-weight: 800; color: var(--dark); border: 1px dashed #ccc; font-size: 1.1rem; }
+        .mass-label { display: block; margin-top: 10px; padding: 10px; background: #f9f9f9; border-radius: 8px; text-align: center; font-weight: 800; color: var(--dark); border: 1px dashed #ccc; }
         
-        /* Sekcja podsumowania */
         .sticky-summary { background: var(--dark); color: white; padding: 20px; display: flex; justify-content: space-between; position: sticky; bottom: 0; border-radius: 20px 20px 0 0; z-index: 100; align-items: center; }
         .btn-view { background: #27ae60; color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; margin-top: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-        /* Specjalne style dla trybu podglądu (Screenshot) */
+        /* Style trybu podglądu */
         #preview-header { display: none; padding-bottom: 20px; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
         .preview-mode #preview-header { display: flex; align-items: center; justify-content: space-between; }
         .preview-mode .no-view { display: none !important; }
         .preview-mode input, .preview-mode select, .preview-mode textarea { 
-            border: none !important; background: transparent !important; padding: 0 !important; font-weight: bold; font-size: 1.2rem; color: #000; pointer-events: none; 
+            border: none !important; background: transparent !important; padding: 0 !important; font-weight: bold; font-size: 1.1rem; color: #000; pointer-events: none; 
         }
-        .preview-mode .app-shell { background: #fff; }
         .preview-mode .sticky-summary { background: #f9f9f9; color: #000; border-top: 4px solid var(--dark); border-radius: 0; }
-        .preview-mode #totalKoszt { color: #000 !important; }
+        .preview-mode #totalKoszt { color: var(--sale) !important; }
+        #discount-info { font-size: 0.8rem; color: var(--sale); font-weight: bold; display: none; }
     </style>
 </head>
 <body>
@@ -54,15 +50,15 @@
 <div class="app-shell" id="app-root">
     <header class="no-view">
         <img src="ROSSO Pracownia.png" alt="Logo">
-        <h1>ROSSO KALKULATOR</h1>
+        <h1>JUBILER DS</h1>
     </header>
 
     <div class="content">
         <div id="preview-header">
             <img src="ROSSO Pracownia.png" style="height: 100px;">
             <div style="text-align: right;">
-                <h2 style="margin:0; color:var(--gold); font-size: 18px;">OFERTA ROSSO</h2>
-                <p id="display-date" style="margin:5px 0 0 0; font-size: 12px; font-weight: bold;"></p>
+                <h2 style="margin:0; color:var(--gold); font-size: 18px;">OFERTA INDYWIDUALNA</h2>
+                <p id="display-date" style="margin:5px 0 0 0; font-size: 12px;"></p>
             </div>
         </div>
 
